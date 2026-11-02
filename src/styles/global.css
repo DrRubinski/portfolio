@@ -1,53 +1,112 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
+/* Make the `dark:` variant respond to a `.dark` class instead of OS
+   preference, so the toggle in <ThemeToggle /> can override the system. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------
+   Design tokens (light values). Edit these five colors to re-skin the
+   entire site — every component reads from the tokens below, nothing
+   hardcodes a hex value.
+   --------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --paper: #f7f6f3; /* page background */
+  --ink: #15161b; /* primary text */
+  --ink-soft: #5b5d66; /* secondary text */
+  --signal: #3d3dff; /* the one accent color */
+  --line: #e4e2dc; /* borders, rules */
+  --surface: #efeeea; /* cards, raised panels */
+}
+
+.dark {
+  color-scheme: dark;
+
+  --paper: #101114;
+  --ink: #f2f1ed;
+  --ink-soft: #9a9ca6;
+  --signal: #7b7bff;
+  --line: #26272c;
+  --surface: #1a1b20;
+}
+
+/* `inline` keeps these resolving against the live --paper/--ink/etc custom
+   properties above at runtime, instead of Tailwind inlining a static value
+   at build time — required for the .dark class swap to work. */
 @theme inline {
-  --font-sans: var(--font-be-vietnam-pro);
-  --font-serif: var(--font-gabarito);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-signal: var(--signal);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
 
-  --color-primary: #2563eb;
-  --color-neutral: #94a3b8;
-  --color-white: #e2e8f0;
-  --color-black: #0e141b;
+  /* Astro's Fonts API exposes the loaded families on --ff-* (see
+     astro.config.mjs). These map them to font-display / font-body /
+     font-mono utility classes. */
+  --font-display: var(--ff-display);
+  --font-body: var(--ff-body);
+  --font-mono: var(--ff-mono);
+}
 
-  --text-xs: 0.875rem;
-  --text-xs--line-height: 1.125rem;
-  --text-sm: 1rem;
-  --text-sm--line-height: 1.25rem;
-  --text-base: 1.125rem;
-  --text-base--line-height: 1.625rem;
-  --text-lg: 1.25rem;
-  --text-lg--line-height: 1.75rem;
-  --text-xl: 1.5rem;
-  --text-xl--line-height: 1.813rem;
-  --text-2xl: 1.75rem;
-  --text-2xl--line-height: 2.125rem;
-  --text-3xl: 2rem;
-  --text-3xl--line-height: 2.375rem;
-  --text-4xl: 2.25rem;
-  --text-4xl--line-height: 2.688rem;
-  --text-5xl: 2.5rem;
-  --text-5xl--line-height: 3rem;
-  --text-6xl: 3rem;
-  --text-6xl--line-height: 3.625rem;
-  --text-7xl: 3.75rem;
-  --text-7xl--line-height: 1;
-  --text-8xl: 4.5rem;
-  --text-8xl--line-height: 4.875rem;
-  --text-9xl: 6rem;
-  --text-9xl--line-height: 6.625rem;
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
 
-  --tracking-tightest: -2px;
-  --tracking-tighter: -1px;
-  --tracking-tight: -0.25px;
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
 
-  --animate-slide-in: slide-in 600ms ease both;
+  ::selection {
+    background-color: var(--color-signal);
+    color: var(--color-paper);
+  }
 
-  @keyframes slide-in {
-    10% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(0);
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    body {
+      transition:
+        background-color 200ms ease,
+        color 200ms ease;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+}
+
+/* Tune @tailwindcss/typography to use the site's tokens instead of its
+   default gray scale, so rendered Markdown matches the rest of the page. */
+.prose {
+  --tw-prose-body: var(--color-ink-soft);
+  --tw-prose-headings: var(--color-ink);
+  --tw-prose-bold: var(--color-ink);
+  --tw-prose-links: var(--color-signal);
+  --tw-prose-bullets: var(--color-signal);
+  --tw-prose-hr: var(--color-line);
+  --tw-prose-quotes: var(--color-ink);
+  --tw-prose-quote-borders: var(--color-signal);
+  --tw-prose-code: var(--color-ink);
+}
+.prose :where(h2, h3, h4) {
+  font-family: var(--font-display);
+}
+.prose :where(a) {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
