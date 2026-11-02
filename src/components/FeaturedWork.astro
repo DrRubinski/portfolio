@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'work'>;
+}
+
+const { entry } = Astro.props;
+const { title, summary, tags, cover } = entry.data;
+const href = `/work/${entry.id}`;
+---
+
+<a
+  href={href}
+  class="group border-line relative block w-full overflow-hidden rounded-sm border"
+  aria-label={`View project: ${title}`}
+>
+  {
+    cover ? (
+      <Image
+        src={cover}
+        alt={title}
+        class="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+        widths={[800, 1200, 1600]}
+        sizes="(max-width: 768px) 100vw, 768px"
+      />
+    ) : (
+      <div class="bg-surface flex aspect-[16/9] w-full items-center justify-center">
+        <span class="text-ink-soft font-mono text-xs">No cover image</span>
+      </div>
+    )
+  }
+
+  {/* Hover overlay */}
+  <div
+    class="absolute inset-0 flex items-end justify-between gap-4 bg-black/0 p-5 transition-colors duration-300 group-hover:bg-black/40"
+  >
+    <div class="translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+      <p class="font-display text-lg font-medium text-white">{title}</p>
+      <p class="mt-1 text-sm text-white/70">{summary}</p>
+    </div>
+
+    <span
+      class="shrink-0 translate-y-2 rounded-sm bg-white px-4 py-2 font-mono text-xs text-black opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+    >
+      View project →
+    </span>
+  </div>
+</a>
+
+{
+  tags.length > 0 && (
+    <p class="text-ink-soft mt-3 font-mono text-xs">{tags.slice(0, 3).join(' · ')}</p>
+  )
+}
