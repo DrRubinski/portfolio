@@ -1,17 +1,15 @@
 // Edit this file to re-label the entire site. Header, Footer, the homepage
 // and SEO defaults all read from here instead of hardcoding copy.
 export const SITE = {
-  name: 'John Doe',
-  role: 'Product design & frontend engineering',
-  email: 'johndoe@example.com',
-  tagline: 'I design and build interfaces that hold up under real use.',
+  name: 'Rubén Rohde',
+  role: 'Product Design',
+  email: 'rubenrohde@me.com',
+  tagline: 'I design digital products that feel simple — no matter how complex the problem.',
   description:
-    'Portfolio of John Doe — product design and frontend engineering, with an emphasis on speed, clarity, and the details most people skip.',
-  status: 'Currently building at Studio Co · open to new work, Q3 2026',
+    'Portfolio of Rubén Rohde — product designer with an emphasis on clarity, simplicity, and the details that make products feel right.',
+  status: 'Currently building at Overjet.ai',
   social: [
-    { label: 'GitHub', href: 'https://github.com/your-username' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/your-username' },
-    { label: 'X', href: 'https://x.com/your-username' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/rubenrohde' },
   ],
   locale: 'en',
 } as const;
