@@ -17,22 +17,18 @@ const selected = remaining.slice(0, 4);
 
 <BaseLayout title={SITE.name}>
   <section class="mx-auto max-w-3xl px-6 pt-16 pb-20 sm:pt-24">
-    <p class="text-ink-soft mb-6 inline-flex items-center gap-2 font-mono text-xs">
-      <span class="bg-signal h-1.5 w-1.5 rounded-full" aria-hidden="true"></span>
-      {SITE.status}
-    </p>
-
     <h1 class="font-display text-ink max-w-2xl text-4xl leading-[1.1] font-medium sm:text-5xl">
       {SITE.tagline}
     </h1>
 
-    <p class="text-ink-soft mt-6 max-w-md">
-      {SITE.role} — based on the work below, not a list of buzzwords.
+    <p class="text-ink-soft mt-6 max-w-lg">
+      I work across product strategy, design, and execution. These days, I'm building AI products
+      for dental practices at Overjet. Previously, I helped shape the direction and design of
+      enterprise products at Carelon AI, Webex, Cisco, and Acano.
     </p>
 
     <div class="mt-8 flex flex-wrap items-center gap-3">
       <Button href="/work" variant="solid">View the work →</Button>
-      <Button href="#contact" variant="ghost">Say hello</Button>
     </div>
   </section>
 

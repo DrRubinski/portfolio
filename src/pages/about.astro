@@ -1,49 +1,79 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Button from '@/components/Button.astro';
-import { SITE } from '@/site.config';
-
-const tools = ['TypeScript', 'Astro', 'React', 'Figma', 'Tailwind CSS', 'Node.js'];
+import { SITE, EXPERIENCE } from '@/site.config';
 ---
 
 <BaseLayout title="About" description={`A bit about ${SITE.name} and how they work.`}>
   <section class="mx-auto max-w-3xl px-6 pt-16 pb-24 sm:pt-24">
     <p class="text-ink-soft mb-6 font-mono text-xs tracking-[0.2em] uppercase">About</p>
 
-    <h1 class="font-display text-ink max-w-xl text-3xl font-medium sm:text-4xl">
-      {SITE.role}.
-    </h1>
-
-    <div class="prose prose-sm sm:prose-base mt-8 max-w-xl">
+    <div class="prose prose-sm sm:prose-base mt-2 max-w-xl">
       <p>
-        I start most projects by trying to find the smallest version of the problem — the one
-        screen, one flow, or one fix that actually matters — and build that first, properly, before
-        expanding outward.
+        I'm a Lead Designer at Overjet, an AI dental company, where I joined as the first designer
+        and built the design team. Before that I was Design Director at Carelon AI, and I built
+        products, services and various design systems at Cisco, Webex and Acano.
       </p>
       <p>
-        That usually means fewer features than a kickoff deck promises, and more attention to the
-        parts people interact with constantly: load times, empty states, error messages, the things
-        that quietly decide whether software feels good to use.
+        When I ran my own studio, I did the work myself again: research, design, prototyping,
+        delivery. I learned Figma and the tools I had missed as a manager, and I got an early seat
+        at how AI changes the job. I lead when a team needs it and make when the work needs hands.
       </p>
       <p>
-        Outside of client and product work, I maintain a couple of small open-source tools and write
-        occasional notes on what I learn building them.
+        AI doesn't decide what's worth building, what an error message should say, or whether a rep
+        on a live call can find the answer. My best days are spent with people and AI, finding a
+        fast, elegant answer to a customer's problem.
       </p>
+      <p>Tools change. Building things people can use hasn't.</p>
     </div>
 
-    <div class="mt-10">
-      <p class="text-ink-soft mb-3 font-mono text-xs tracking-[0.2em] uppercase">Tools</p>
-      <ul class="flex flex-wrap gap-2">
+    <div class="mt-14">
+      <div class="mb-6 flex items-center justify-between">
+        <p class="text-ink-soft font-mono text-xs tracking-[0.2em] uppercase">Experience</p>
+        <a
+          href="/resume.pdf"
+          download
+          class="border-line text-ink-soft hover:border-signal hover:text-signal flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono text-xs transition-colors"
+        >
+          Download ↓
+        </a>
+      </div>
+
+      <ul class="space-y-10">
         {
-          tools.map((tool) => (
-            <li class="border-line text-ink-soft rounded-full border px-3 py-1 font-mono text-xs">
-              {tool}
+          EXPERIENCE.map((entry) => (
+            <li class="grid gap-1 sm:grid-cols-[10rem_1fr] sm:gap-6">
+              <div class="pt-0.5">
+                <p class="text-ink-soft font-mono text-xs">
+                  {entry.start} — {entry.end}
+                </p>
+                <p class="text-signal mt-0.5 font-mono text-xs">{entry.company}</p>
+              </div>
+              <div>
+                <p class="text-ink font-medium">{entry.role}</p>
+                <p class="text-ink-soft mt-1.5 text-sm leading-relaxed">{entry.description}</p>
+                {entry.work.length > 0 && (
+                  <p class="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+                    <span class="text-ink-soft font-mono text-[10px] tracking-[0.15em] uppercase">
+                      Work
+                    </span>
+                    {entry.work.map((w) => (
+                      <a
+                        href={w.href}
+                        class="text-signal hover:underline font-mono text-xs"
+                      >
+                        {w.label}
+                      </a>
+                    ))}
+                  </p>
+                )}
+              </div>
             </li>
           ))
         }
       </ul>
     </div>
 
-    <Button href={`mailto:${SITE.email}`} class="mt-10">Get in touch</Button>
+    <Button href={`mailto:${SITE.email}`} class="mt-12">Get in touch</Button>
   </section>
 </BaseLayout>
